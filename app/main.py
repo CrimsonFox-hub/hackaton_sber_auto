@@ -114,17 +114,15 @@ class ErrorResponse(BaseModel):
 )
 async def infer(features: SessionFeatures):
     try:
-        features_dict = features.model_dump()
-        df = pd.DataFrame([features_dict])
-
         model = get_model()
 
-        df = df[model.feature_names_in_]
+        features_dict = features.model_dump()
+        df = pd.DataFrame([features_dict])
+        input_data = df.reindex(columns=model.feature_names_in_)
 
-        probability = float(model.predict_proba(df)[0, 1])
+        probability = float(model.predict_proba(input_data)[0, 1])
+        prediction = int(probability > 0.5)
 
-        # бинарный результат (1 - подпишется, 0 - не подпишется)
-        prediction = 1 if probability > 0.5 else 0
         return PredictionResponse(prediction=prediction, probability=probability)
     except HTTPException:
         raise
