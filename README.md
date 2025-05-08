@@ -18,6 +18,7 @@
 * в папке app  model.pkl - бинарный образ модели
 * готовая презентация_хакатон_команда_TEAM-A.pptx
 * текст для презентации 2.docx
+* https://sberauto.cloud2.mgorozii.com/#/default/infer_infer_post - реализация API 
 
 ## Установка
 ```shell
